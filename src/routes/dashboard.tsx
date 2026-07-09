@@ -2696,7 +2696,15 @@ function VoterDashboard({ elections, loading }: { elections: Election[], loading
               <option value="upcoming">Upcoming</option>
               <option value="voted">Ballots Cast</option>
             </select>
-            <Link to="/results" className="hidden text-sm font-semibold text-brand hover:underline sm:inline">View live results →</Link>
+            {(() => {
+              const activeElections = elections.filter(e => e.status === "active");
+              const allActiveVoted = activeElections.length > 0 ? activeElections.every(e => e.has_voted) : true;
+              return allActiveVoted ? (
+                <Link to="/results" className="hidden text-sm font-semibold text-brand hover:underline sm:inline">View live results →</Link>
+              ) : (
+                <span className="hidden text-sm font-semibold text-muted-foreground opacity-50 cursor-not-allowed sm:inline" title="You must cast all active ballots to view live results">Complete ballots for results</span>
+              );
+            })()}
           </div>
         </div>
 
@@ -3695,9 +3703,9 @@ function ProfileItem({ icon, label, value }: { icon: React.ReactNode; label: str
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-white/10 px-4 py-3 backdrop-blur-sm ring-1 ring-white/15">
-      <p className="text-xs text-white/70">{label}</p>
-      <p className="mt-1 font-display text-2xl font-bold">{value}</p>
+    <div className="rounded-xl border border-border bg-card px-4 py-3 shadow-sm">
+      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
+      <p className="mt-1 font-display text-2xl font-bold text-foreground">{value}</p>
     </div>
   );
 }

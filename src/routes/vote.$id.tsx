@@ -20,6 +20,7 @@ function VotePage() {
   
   const [query, setQuery] = useState("");
   const [partyFilter, setPartyFilter] = useState<string | null>(null);
+  const [letterFilter, setLetterFilter] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [reviewing, setReviewing] = useState(false);
   const [receipt, setReceipt] = useState<string | null>(null);
@@ -56,12 +57,14 @@ function VotePage() {
   const candidates = election?.candidates || [];
   
   const parties = useMemo(() => Array.from(new Set(candidates.map((c) => c.party_abbr))), [candidates]);
+  const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const filtered = candidates.filter((c) => {
     const q = query.toLowerCase();
     const matchesQuery = !q || c.name.toLowerCase().includes(q) || c.party.toLowerCase().includes(q);
     const matchesParty = !partyFilter || c.party_abbr === partyFilter;
-    return matchesQuery && matchesParty;
+    const matchesLetter = !letterFilter || c.party_abbr.toUpperCase().startsWith(letterFilter) || c.party.toUpperCase().startsWith(letterFilter);
+    return matchesQuery && matchesParty && matchesLetter;
   });
 
   const confirmVote = async () => {
@@ -135,100 +138,99 @@ function VotePage() {
           )}
         </div>
 
-        {/* Filters */}
-        <div className="mt-6 flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:flex-row sm:items-center">
-          <div className="relative flex-1">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              placeholder="Search candidate or party…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full rounded-lg border border-input bg-background py-2 pl-9 pr-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/25"
-            />
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            <FilterChip active={!partyFilter} onClick={() => setPartyFilter(null)}>All</FilterChip>
-            {parties.map((p) => (
-              <FilterChip key={p} active={partyFilter === p} onClick={() => setPartyFilter(p)}>{p}</FilterChip>
+        <div className="mt-6 flex flex-col sm:flex-row gap-6 items-start">
+          {/* Alphabet Filter Sidebar */}
+          <div className="flex flex-row sm:flex-col flex-wrap gap-1.5 shrink-0 justify-start">
+            <FilterChip active={!letterFilter} onClick={() => setLetterFilter(null)}>All</FilterChip>
+            {ALPHABET.map((letter) => (
+              <FilterChip key={letter} active={letterFilter === letter} onClick={() => setLetterFilter(letter)}>
+                {letter}
+              </FilterChip>
             ))}
           </div>
-        </div>
 
-        {/* Candidates */}
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {filtered.map((c) => {
-            const active = selected === c.id;
-            return (
-              <li key={c.id}>
-                <button
-                  onClick={() => !alreadyVoted && setSelected(c.id)}
-                  disabled={alreadyVoted}
-                  aria-pressed={active}
-                  className={`h-full w-full rounded-2xl border p-4 text-left transition ${
-                    active
-                      ? "border-brand bg-primary-soft/50 shadow-md"
-                      : "border-border bg-card hover:border-brand/50 hover:shadow-sm"
-                  } ${alreadyVoted && !active ? "opacity-40" : ""}`}
-                >
-                  <div className="flex items-start gap-3">
-                    <span
-                      className="grid h-14 w-14 shrink-0 place-items-center rounded-xl font-display text-lg font-bold text-white shadow-sm"
-                      style={{ background: c.color }}
-                      aria-hidden
-                    >
-                      {c.party_abbr}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0">
-                          <p className="truncate font-display text-lg font-bold">{c.name}</p>
-                          <p className="truncate text-xs text-muted-foreground">{c.party}</p>
-                        </div>
-                        <span
-                          className={`mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 ${
-                            active ? "border-brand bg-brand text-white" : "border-border"
-                          }`}
-                        >
-                          {active && <CheckCircle2 className="h-3.5 w-3.5" />}
-                        </span>
-                      </div>
-                      {c.running_mate && (
-                        <p className="mt-1 text-xs text-muted-foreground">Running mate: {c.running_mate}</p>
-                      )}
-                      <p className="mt-2 line-clamp-2 text-sm text-foreground/80">{c.manifesto}</p>
-                    </div>
-                  </div>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-
-        {filtered.length === 0 && (
-          <p className="mt-8 text-center text-sm text-muted-foreground">No candidates match your filters.</p>
-        )}
-
-        {/* Sticky action bar */}
-        {!alreadyVoted && (
-          <div className="sticky bottom-4 mt-8">
-            <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 rounded-2xl border border-border bg-card/95 p-3 pl-4 shadow-lg backdrop-blur">
-              <p className="text-sm">
-                {selected ? (
-                  <>Selected: <span className="font-semibold text-brand-dark">{candidates.find((c) => c.id === selected)?.name}</span></>
-                ) : (
-                  <span className="text-muted-foreground">Select a candidate to continue</span>
-                )}
-              </p>
-              <button
-                onClick={() => setReviewing(true)}
-                disabled={!selected || casting}
-                className="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-dark disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                Review ballot
-              </button>
+          <div className="flex-1 min-w-0">
+            {/* Filters */}
+            <div className="flex flex-col gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:flex-row sm:items-center">
+              <div className="relative flex-1 sm:max-w-sm">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  placeholder="Search candidate or party…"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="w-full rounded-lg border border-input bg-background py-2 pl-9 pr-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/25"
+                />
+              </div>
             </div>
+
+            {/* Candidates */}
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {filtered.map((c) => {
+                const active = selected === c.id;
+                return (
+                  <li key={c.id}>
+                    <button
+                      onClick={() => {
+                        if (!alreadyVoted) {
+                          setSelected(c.id);
+                          setReviewing(true); // Trigger modal immediately
+                        }
+                      }}
+                      disabled={alreadyVoted}
+                      aria-pressed={active}
+                      className={`h-full w-full rounded-2xl border p-4 text-left transition ${
+                        active
+                          ? "border-brand bg-primary-soft/50 shadow-md"
+                          : "border-border bg-card hover:border-brand/50 hover:shadow-sm"
+                      } ${alreadyVoted && !active ? "opacity-40" : ""}`}
+                    >
+                      <div className="flex items-start gap-3">
+                        {c.party_logo ? (
+                          <img
+                            src={c.party_logo}
+                            alt={`${c.party_abbr} logo`}
+                            className="h-14 w-14 shrink-0 rounded-xl object-contain shadow-sm bg-white p-1"
+                          />
+                        ) : (
+                          <span
+                            className="grid h-14 w-14 shrink-0 place-items-center rounded-xl font-display text-lg font-bold text-white shadow-sm"
+                            style={{ background: c.color }}
+                            aria-hidden
+                          >
+                            {c.party_abbr}
+                          </span>
+                        )}
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="min-w-0">
+                              <p className="truncate font-display text-lg font-bold">{c.name}</p>
+                              <p className="truncate text-xs text-muted-foreground">{c.party}</p>
+                            </div>
+                            <span
+                              className={`mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 ${
+                                active ? "border-brand bg-brand text-white" : "border-border"
+                              }`}
+                            >
+                              {active && <CheckCircle2 className="h-3.5 w-3.5" />}
+                            </span>
+                          </div>
+                          {c.running_mate && (
+                            <p className="mt-1 text-xs text-muted-foreground">Running mate: {c.running_mate}</p>
+                          )}
+                          <p className="mt-2 line-clamp-2 text-sm text-foreground/80">{c.manifesto}</p>
+                        </div>
+                      </div>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {filtered.length === 0 && (
+              <p className="mt-8 text-center text-sm text-muted-foreground">No candidates match your filters.</p>
+            )}
           </div>
-        )}
+        </div>
       </main>
 
       {/* Review modal */}
@@ -241,9 +243,17 @@ function VotePage() {
             const c = candidates.find((x) => x.id === selected)!;
             return (
               <div className="mt-4 flex items-center gap-3 rounded-xl border border-border bg-surface p-4">
-                <span className="grid h-12 w-12 place-items-center rounded-lg font-display font-bold text-white" style={{ background: c.color }}>
-                  {c.party_abbr}
-                </span>
+                {c.party_logo ? (
+                  <img
+                    src={c.party_logo}
+                    alt={`${c.party_abbr} logo`}
+                    className="h-12 w-12 shrink-0 rounded-lg object-contain bg-white p-0.5"
+                  />
+                ) : (
+                  <span className="grid h-12 w-12 place-items-center rounded-lg font-display font-bold text-white" style={{ background: c.color }}>
+                    {c.party_abbr}
+                  </span>
+                )}
                 <div>
                   <p className="font-display text-lg font-bold">{c.name}</p>
                   <p className="text-xs text-muted-foreground">{c.party}</p>

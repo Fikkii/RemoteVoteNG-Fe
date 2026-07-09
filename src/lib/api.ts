@@ -19,6 +19,7 @@ export interface Candidate {
   name: string;
   party: string;
   party_abbr: string;
+  party_logo?: string | null;
   color: string;
   manifesto: string;
   running_mate?: string;
