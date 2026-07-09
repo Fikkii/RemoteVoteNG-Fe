@@ -1,1 +1,0 @@
-var e=`rvng.session.v1`;function t(){if(typeof window>`u`)return null;try{let t=window.localStorage.getItem(e);return t?JSON.parse(t):null}catch{return null}}function n(t){typeof window>`u`||(t?window.localStorage.setItem(e,JSON.stringify(t)):window.localStorage.removeItem(e))}function r(e){return e.toLocaleString(`en-NG`)}export{t as n,n as r,r as t};

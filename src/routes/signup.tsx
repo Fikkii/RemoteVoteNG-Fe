@@ -115,7 +115,7 @@ function SignUpPage() {
         footer={
           <div className="font-semibold text-[16px] md:text-[18px]">
             Already have an account?{" "}
-            <Link to="/" className="text-brand hover:underline">Sign in</Link>
+            <Link to="/login" className="text-brand hover:underline">Sign in</Link>
           </div>
         }
       >

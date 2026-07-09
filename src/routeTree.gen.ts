@@ -14,6 +14,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as OnboardRouteImport } from './routes/onboard'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LanguageRouteImport } from './routes/language'
 import { Route as ForgotRouteImport } from './routes/forgot'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -44,6 +45,11 @@ const ResultsRoute = ResultsRouteImport.update({
 const OnboardRoute = OnboardRouteImport.update({
   id: '/onboard',
   path: '/onboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LanguageRoute = LanguageRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/forgot': typeof ForgotRoute
   '/language': typeof LanguageRoute
+  '/login': typeof LoginRoute
   '/onboard': typeof OnboardRoute
   '/results': typeof ResultsRoute
   '/signup': typeof SignupRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/forgot': typeof ForgotRoute
   '/language': typeof LanguageRoute
+  '/login': typeof LoginRoute
   '/onboard': typeof OnboardRoute
   '/results': typeof ResultsRoute
   '/signup': typeof SignupRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/forgot': typeof ForgotRoute
   '/language': typeof LanguageRoute
+  '/login': typeof LoginRoute
   '/onboard': typeof OnboardRoute
   '/results': typeof ResultsRoute
   '/signup': typeof SignupRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/forgot'
     | '/language'
+    | '/login'
     | '/onboard'
     | '/results'
     | '/signup'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/forgot'
     | '/language'
+    | '/login'
     | '/onboard'
     | '/results'
     | '/signup'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/forgot'
     | '/language'
+    | '/login'
     | '/onboard'
     | '/results'
     | '/signup'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   ForgotRoute: typeof ForgotRoute
   LanguageRoute: typeof LanguageRoute
+  LoginRoute: typeof LoginRoute
   OnboardRoute: typeof OnboardRoute
   ResultsRoute: typeof ResultsRoute
   SignupRoute: typeof SignupRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/onboard'
       fullPath: '/onboard'
       preLoaderRoute: typeof OnboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/language': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   ForgotRoute: ForgotRoute,
   LanguageRoute: LanguageRoute,
+  LoginRoute: LoginRoute,
   OnboardRoute: OnboardRoute,
   ResultsRoute: ResultsRoute,
   SignupRoute: SignupRoute,

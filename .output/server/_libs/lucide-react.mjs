@@ -138,6 +138,19 @@ var ArrowLeft = createLucideIcon("arrow-left", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var ArrowRight = createLucideIcon("arrow-right", [["path", {
+	d: "M5 12h14",
+	key: "1ays0h"
+}], ["path", {
+	d: "m12 5 7 7-7 7",
+	key: "xquz4c"
+}]]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Award = createLucideIcon("award", [["path", {
 	d: "m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526",
 	key: "1yiouv"
@@ -439,6 +452,50 @@ var FileText = createLucideIcon("file-text", [
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
+var FingerprintPattern = createLucideIcon("fingerprint-pattern", [
+	["path", {
+		d: "M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4",
+		key: "1nerag"
+	}],
+	["path", {
+		d: "M14 13.12c0 2.38 0 6.38-1 8.88",
+		key: "o46ks0"
+	}],
+	["path", {
+		d: "M17.29 21.02c.12-.6.43-2.3.5-3.02",
+		key: "ptglia"
+	}],
+	["path", {
+		d: "M2 12a10 10 0 0 1 18-6",
+		key: "ydlgp0"
+	}],
+	["path", {
+		d: "M2 16h.01",
+		key: "1gqxmh"
+	}],
+	["path", {
+		d: "M21.8 16c.2-2 .131-5.354 0-6",
+		key: "drycrb"
+	}],
+	["path", {
+		d: "M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2",
+		key: "1tidbn"
+	}],
+	["path", {
+		d: "M8.65 22c.21-.66.45-1.32.57-2",
+		key: "13wd9y"
+	}],
+	["path", {
+		d: "M9 6.8a6 6 0 0 1 9 5.2v2",
+		key: "1fr1j5"
+	}]
+]);
+/**
+* @license lucide-react v0.575.0 - ISC
+*
+* This source code is licensed under the ISC license.
+* See the LICENSE file in the root directory of this source tree.
+*/
 var Lock = createLucideIcon("lock", [["rect", {
 	width: "18",
 	height: "11",
@@ -711,4 +768,4 @@ var X = createLucideIcon("x", [["path", {
 	key: "d8bk6v"
 }]]);
 //#endregion
-export { Activity as A, CircleCheckBig as C, CalendarDays as D, ChartColumn as E, Award as O, CircleCheck as S, Check as T, FileText as _, TriangleAlert as a, Database as b, ShieldCheck as c, RotateCw as d, Plus as f, Lock as g, LogOut as h, User as i, ArrowLeft as k, Search as l, Mail as m, Vote as n, TrendingUp as o, MapPin as p, Users as r, Shield as s, X as t, ScanFace as u, Eye as v, ChevronRight as w, Cpu as x, EyeOff as y };
+export { ArrowRight as A, CircleCheck as C, ChartColumn as D, Check as E, Activity as M, CalendarDays as O, Cpu as S, ChevronRight as T, FingerprintPattern as _, TriangleAlert as a, EyeOff as b, ShieldCheck as c, RotateCw as d, Plus as f, Lock as g, LogOut as h, User as i, ArrowLeft as j, Award as k, Search as l, Mail as m, Vote as n, TrendingUp as o, MapPin as p, Users as r, Shield as s, X as t, ScanFace as u, FileText as v, CircleCheckBig as w, Database as x, Eye as y };

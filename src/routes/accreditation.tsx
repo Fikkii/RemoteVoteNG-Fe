@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { apiRequest } from "../lib/api";
+import { AppHeader } from "@/components/AppHeader";
+import { inputClass } from "@/components/AuthLayout";
 
 export const Route = createFileRoute("/accreditation")({
   component: AccreditationPage,
@@ -86,16 +88,14 @@ function AccreditationPage() {
   };
 
   return (
-    <div className="acc-page">
-      <div className="acc-container">
-        {/* Header */}
-        <div className="acc-topbar">
-          <Link to="/" className="acc-back">← Back to Home</Link>
-          <div className="acc-brand">
-            <span className="acc-brand-icon">⚡</span>
-            RemoteVote NG
-          </div>
-        </div>
+    <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-brand/20">
+      <AppHeader />
+      
+      <main className="flex-1 relative overflow-hidden py-12">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand/15 via-background to-background pointer-events-none" />
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[100px] pointer-events-none" />
+        
+        <div className="acc-container relative z-10">
 
         <div className="acc-hero">
           <div className="acc-inec-badge">🏛️ INEC Accreditation Portal</div>
@@ -149,7 +149,7 @@ function AccreditationPage() {
                     placeholder="e.g., Channels Television"
                     value={form.organization_name}
                     onChange={(e) => updateField("organization_name", e.target.value)}
-                    className={errors.organization_name ? "err" : ""}
+                    className={`${inputClass} ${errors.organization_name ? "err" : ""}`}
                   />
                   {errors.organization_name && <span className="ferr">{errors.organization_name}</span>}
                 </div>
@@ -161,7 +161,7 @@ function AccreditationPage() {
                     placeholder="Full name of primary contact"
                     value={form.contact_name}
                     onChange={(e) => updateField("contact_name", e.target.value)}
-                    className={errors.contact_name ? "err" : ""}
+                    className={`${inputClass} ${errors.contact_name ? "err" : ""}`}
                   />
                   {errors.contact_name && <span className="ferr">{errors.contact_name}</span>}
                 </div>
@@ -175,7 +175,7 @@ function AccreditationPage() {
                     placeholder="email@organization.org"
                     value={form.contact_email}
                     onChange={(e) => updateField("contact_email", e.target.value)}
-                    className={errors.contact_email ? "err" : ""}
+                    className={`${inputClass} ${errors.contact_email ? "err" : ""}`}
                   />
                   {errors.contact_email && <span className="ferr">{errors.contact_email}</span>}
                 </div>
@@ -187,7 +187,7 @@ function AccreditationPage() {
                     placeholder="+234 800 000 0000"
                     value={form.contact_phone}
                     onChange={(e) => updateField("contact_phone", e.target.value)}
-                    className={errors.contact_phone ? "err" : ""}
+                    className={`${inputClass} ${errors.contact_phone ? "err" : ""}`}
                   />
                   {errors.contact_phone && <span className="ferr">{errors.contact_phone}</span>}
                 </div>
@@ -200,7 +200,7 @@ function AccreditationPage() {
                   placeholder="Enter your organization's registration or reference number"
                   value={form.organization_id}
                   onChange={(e) => updateField("organization_id", e.target.value)}
-                  className={errors.organization_id ? "err" : ""}
+                  className={`${inputClass} ${errors.organization_id ? "err" : ""}`}
                 />
                 {errors.organization_id && <span className="ferr">{errors.organization_id}</span>}
               </div>
@@ -212,7 +212,7 @@ function AccreditationPage() {
                   placeholder="Briefly describe your organization's mandate, coverage area, and what you intend to monitor or report. (Minimum 50 characters)"
                   value={form.mandate_description}
                   onChange={(e) => updateField("mandate_description", e.target.value)}
-                  className={errors.mandate_description ? "err" : ""}
+                  className={`${inputClass} resize-y min-h-[120px] ${errors.mandate_description ? "err" : ""}`}
                 />
                 <small>{form.mandate_description.length} / 50 minimum characters</small>
                 {errors.mandate_description && <span className="ferr">{errors.mandate_description}</span>}
@@ -280,50 +280,12 @@ function AccreditationPage() {
           </div>
         )}
       </div>
+      </main>
 
       <style>{`
-        .acc-page {
-          min-height: 100vh;
-          background: radial-gradient(ellipse at top, #0f172a 0%, #1a1040 50%, #0f172a 100%);
-          color: #e2e8f0;
-          font-family: 'Inter', sans-serif;
-          padding: 2rem 1rem 4rem;
-        }
-
         .acc-container {
           max-width: 820px;
           margin: 0 auto;
-        }
-
-        .acc-topbar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 2.5rem;
-        }
-
-        .acc-back {
-          color: #94a3b8;
-          text-decoration: none;
-          font-size: 0.85rem;
-          transition: color 0.2s;
-        }
-        .acc-back:hover { color: #c7d2fe; }
-
-        .acc-brand {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-weight: 700;
-          color: #c7d2fe;
-        }
-
-        .acc-brand-icon {
-          background: linear-gradient(135deg, #6366f1, #8b5cf6);
-          border-radius: 6px;
-          width: 28px; height: 28px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 0.85rem;
         }
 
         .acc-hero {
@@ -333,19 +295,19 @@ function AccreditationPage() {
 
         .acc-inec-badge {
           display: inline-block;
-          background: rgba(99,102,241,0.15);
-          border: 1px solid rgba(99,102,241,0.35);
+          background: color-mix(in srgb, var(--color-brand) 15%, transparent);
+          border: 1px solid color-mix(in srgb, var(--color-brand) 35%, transparent);
           border-radius: 50px;
           padding: 0.35rem 1rem;
           font-size: 0.82rem;
-          color: #a5b4fc;
+          color: var(--color-brand);
           margin-bottom: 1rem;
         }
 
         .acc-hero h1 {
           font-size: clamp(1.6rem, 4vw, 2.5rem);
           font-weight: 800;
-          background: linear-gradient(135deg, #e2e8f0, #a5b4fc);
+          background: linear-gradient(135deg, var(--color-foreground), var(--color-brand));
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -353,7 +315,7 @@ function AccreditationPage() {
         }
 
         .acc-hero p {
-          color: #94a3b8;
+          color: var(--color-muted-foreground);
           max-width: 560px;
           margin: 0 auto;
           line-height: 1.7;
@@ -361,7 +323,7 @@ function AccreditationPage() {
 
         .section-title {
           font-size: 1rem;
-          color: #94a3b8;
+          color: var(--color-muted-foreground);
           font-weight: 600;
           margin-bottom: 1.25rem;
           text-transform: uppercase;
@@ -376,39 +338,39 @@ function AccreditationPage() {
         }
 
         .acc-type-card {
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.1);
+          background: var(--color-surface);
+          border: 1px solid var(--color-border);
           border-radius: 1rem;
           padding: 1.5rem;
           text-align: left;
           cursor: pointer;
           transition: all 0.2s;
-          color: inherit;
+          color: var(--color-foreground);
           position: relative;
         }
 
         .acc-type-card:hover {
-          border-color: rgba(99,102,241,0.5);
-          background: rgba(99,102,241,0.08);
+          border-color: color-mix(in srgb, var(--color-brand) 50%, transparent);
+          background: color-mix(in srgb, var(--color-brand) 8%, transparent);
           transform: translateY(-2px);
         }
 
         .acc-type-card.selected {
-          border-color: #6366f1;
-          background: rgba(99,102,241,0.15);
+          border-color: var(--color-brand);
+          background: color-mix(in srgb, var(--color-brand) 15%, transparent);
         }
 
         .acc-type-icon { font-size: 2rem; margin-bottom: 0.75rem; }
 
         .acc-type-card strong {
           display: block;
-          color: #e2e8f0;
+          color: var(--color-foreground);
           font-size: 0.9rem;
           margin-bottom: 0.5rem;
         }
 
         .acc-type-card p {
-          color: #64748b;
+          color: var(--color-muted-foreground);
           font-size: 0.8rem;
           line-height: 1.5;
           margin: 0;
@@ -418,8 +380,8 @@ function AccreditationPage() {
           position: absolute;
           top: 0.75rem;
           right: 0.75rem;
-          background: #6366f1;
-          color: white;
+          background: var(--color-brand);
+          color: var(--color-background);
           font-size: 0.7rem;
           padding: 0.2rem 0.6rem;
           border-radius: 50px;
@@ -429,8 +391,8 @@ function AccreditationPage() {
         .btn-acc-continue {
           display: block;
           width: 100%;
-          background: linear-gradient(135deg, #6366f1, #8b5cf6);
-          color: white;
+          background: var(--color-brand);
+          color: var(--color-background);
           border: none;
           border-radius: 0.75rem;
           padding: 0.9rem;
@@ -447,27 +409,27 @@ function AccreditationPage() {
           display: inline-flex;
           align-items: center;
           gap: 0.75rem;
-          background: rgba(99,102,241,0.15);
-          border: 1px solid rgba(99,102,241,0.35);
+          background: color-mix(in srgb, var(--color-brand) 15%, transparent);
+          border: 1px solid color-mix(in srgb, var(--color-brand) 35%, transparent);
           border-radius: 50px;
           padding: 0.4rem 1rem;
           font-size: 0.85rem;
-          color: #a5b4fc;
+          color: var(--color-brand);
           margin-bottom: 1.5rem;
           font-weight: 500;
         }
 
         .change-type {
           background: none;
-          border: 1px solid rgba(99,102,241,0.4);
+          border: 1px solid color-mix(in srgb, var(--color-brand) 40%, transparent);
           border-radius: 50px;
-          color: #818cf8;
+          color: var(--color-brand);
           font-size: 0.75rem;
           padding: 0.15rem 0.6rem;
           cursor: pointer;
           transition: background 0.2s;
         }
-        .change-type:hover { background: rgba(99,102,241,0.15); }
+        .change-type:hover { background: color-mix(in srgb, var(--color-brand) 15%, transparent); }
 
         .acc-form {
           display: flex;
@@ -486,28 +448,14 @@ function AccreditationPage() {
         .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
         .form-group label {
-          color: #94a3b8;
+          color: var(--color-foreground);
           font-size: 0.82rem;
           font-weight: 500;
         }
 
-        .form-group input, .form-group textarea {
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 0.6rem;
-          padding: 0.75rem 1rem;
-          color: #e2e8f0;
-          font-size: 0.9rem;
-          outline: none;
-          transition: border-color 0.2s;
-          font-family: inherit;
-          resize: vertical;
-        }
-
-        .form-group input:focus, .form-group textarea:focus { border-color: #6366f1; }
         .form-group input.err, .form-group textarea.err { border-color: #ef4444; }
 
-        .form-group small { color: #475569; font-size: 0.77rem; }
+        .form-group small { color: var(--color-muted-foreground); font-size: 0.77rem; }
         .ferr { color: #f87171; font-size: 0.8rem; }
 
         .acc-submit-error {
@@ -525,11 +473,11 @@ function AccreditationPage() {
         }
 
         .btn-acc-back {
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.12);
+          background: var(--color-surface);
+          border: 1px solid var(--color-border);
           border-radius: 0.75rem;
           padding: 0.9rem 1.5rem;
-          color: #94a3b8;
+          color: var(--color-foreground);
           font-size: 0.9rem;
           cursor: pointer;
           transition: background 0.2s;
@@ -540,8 +488,8 @@ function AccreditationPage() {
 
         .btn-acc-submit {
           flex: 1;
-          background: linear-gradient(135deg, #6366f1, #8b5cf6);
-          color: white;
+          background: var(--color-brand);
+          color: var(--color-background);
           border: none;
           border-radius: 0.75rem;
           padding: 0.9rem;
@@ -571,14 +519,14 @@ function AccreditationPage() {
 
         .acc-privacy-note {
           margin-top: 1.5rem;
-          color: #475569;
+          color: var(--color-muted-foreground);
           font-size: 0.8rem;
           text-align: center;
           line-height: 1.5;
           padding: 0.75rem;
-          background: rgba(255,255,255,0.02);
+          background: var(--color-surface);
           border-radius: 0.5rem;
-          border: 1px solid rgba(255,255,255,0.05);
+          border: 1px solid var(--color-border);
         }
 
         .acc-success {
@@ -591,12 +539,12 @@ function AccreditationPage() {
         .acc-success h2 {
           font-size: 1.75rem;
           font-weight: 800;
-          color: #e2e8f0;
+          color: var(--color-foreground);
           margin-bottom: 0.75rem;
         }
 
         .acc-success p {
-          color: #94a3b8;
+          color: var(--color-muted-foreground);
           max-width: 480px;
           margin: 0 auto 1.5rem;
           line-height: 1.7;
@@ -623,8 +571,8 @@ function AccreditationPage() {
           text-align: left;
           max-width: 400px;
           margin: 0 auto 2rem;
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.07);
+          background: var(--color-surface);
+          border: 1px solid var(--color-border);
           border-radius: 0.75rem;
           padding: 1rem 1.25rem;
         }
@@ -636,14 +584,14 @@ function AccreditationPage() {
         }
 
         .timeline-step span { font-size: 1.1rem; flex-shrink: 0; }
-        .timeline-step strong { display: block; color: #c7d2fe; font-size: 0.85rem; }
-        .timeline-step p { color: #64748b; font-size: 0.78rem; margin: 0.15rem 0 0; }
-        .timeline-step.done strong { color: #34d399; }
+        .timeline-step strong { display: block; color: var(--color-foreground); font-size: 0.85rem; }
+        .timeline-step p { color: var(--color-muted-foreground); font-size: 0.78rem; margin: 0.15rem 0 0; }
+        .timeline-step.done strong { color: var(--color-brand); }
 
         .btn-acc-home {
           display: inline-block;
-          background: linear-gradient(135deg, #6366f1, #8b5cf6);
-          color: white;
+          background: var(--color-brand);
+          color: var(--color-background);
           text-decoration: none;
           border-radius: 0.75rem;
           padding: 0.85rem 2rem;

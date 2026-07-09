@@ -83,7 +83,7 @@ function ForgotPage() {
           ? "Enter your NIN and we'll send a reset code to your registered email address."
           : `We've sent a 6-digit verification code to ${email}.`
       }
-      footer={<><Link to="/" className="font-semibold text-brand hover:underline">Back to sign in</Link></>}
+      footer={<><Link to="/login" className="font-semibold text-brand hover:underline">Back to sign in</Link></>}
     >
       {success ? (
         <div className="rounded-lg bg-emerald-500/10 p-4 border border-emerald-500/20 text-center">
