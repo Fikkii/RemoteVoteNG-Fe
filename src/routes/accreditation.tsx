@@ -288,6 +288,10 @@ function AccreditationPage() {
           margin: 0 auto;
         }
 
+        @media(max-width: 1024px) {
+          .acc-container { padding: 0 16px; }
+        }
+
         .acc-hero {
           text-align: center;
           margin-bottom: 3rem;

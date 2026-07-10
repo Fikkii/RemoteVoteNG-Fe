@@ -138,19 +138,6 @@ var ArrowLeft = createLucideIcon("arrow-left", [["path", {
 * This source code is licensed under the ISC license.
 * See the LICENSE file in the root directory of this source tree.
 */
-var ArrowRight = createLucideIcon("arrow-right", [["path", {
-	d: "M5 12h14",
-	key: "1ays0h"
-}], ["path", {
-	d: "m12 5 7 7-7 7",
-	key: "xquz4c"
-}]]);
-/**
-* @license lucide-react v0.575.0 - ISC
-*
-* This source code is licensed under the ISC license.
-* See the LICENSE file in the root directory of this source tree.
-*/
 var Award = createLucideIcon("award", [["path", {
 	d: "m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526",
 	key: "1yiouv"
@@ -768,4 +755,4 @@ var X = createLucideIcon("x", [["path", {
 	key: "d8bk6v"
 }]]);
 //#endregion
-export { ArrowRight as A, CircleCheck as C, ChartColumn as D, Check as E, Activity as M, CalendarDays as O, Cpu as S, ChevronRight as T, FingerprintPattern as _, TriangleAlert as a, EyeOff as b, ShieldCheck as c, RotateCw as d, Plus as f, Lock as g, LogOut as h, User as i, ArrowLeft as j, Award as k, Search as l, Mail as m, Vote as n, TrendingUp as o, MapPin as p, Users as r, Shield as s, X as t, ScanFace as u, FileText as v, CircleCheckBig as w, Database as x, Eye as y };
+export { ArrowLeft as A, CircleCheck as C, ChartColumn as D, Check as E, CalendarDays as O, Cpu as S, ChevronRight as T, FingerprintPattern as _, TriangleAlert as a, EyeOff as b, ShieldCheck as c, RotateCw as d, Plus as f, Lock as g, LogOut as h, User as i, Activity as j, Award as k, Search as l, Mail as m, Vote as n, TrendingUp as o, MapPin as p, Users as r, Shield as s, X as t, ScanFace as u, FileText as v, CircleCheckBig as w, Database as x, Eye as y };
